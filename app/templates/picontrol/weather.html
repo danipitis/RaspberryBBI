@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "layout.html" %}
+{% block head %}
+<!-- Bootstrap -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pitheme.css') }}" rel="stylesheet">
+<title>Weather</title>
+{% endblock %}
+
+{% set active_page = "weather" %}
+
+{% block content %}
+
+<h3>Weather</h3>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</html>

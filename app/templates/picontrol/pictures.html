@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "layout.html" %}
+{% block head %}
+<!-- Bootstrap -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pitheme.css') }}" rel="stylesheet">
+<title>Pictures</title>
+{% endblock %}
+
+{% set active_page = "pictures" %}
+
+{% block content %}
+
+<h3>Pictures</h3>
+
+<div class="row">
+
+	{% for picture in images_data: %}
+	<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+		<div class="thumbnail">
+			<img class="img-responsive" src="{{ url_for('static', filename=['Entertainment/Images/', picture ]|join('')) }}" alt="">
+            </img>
+        <div class="caption">
+            <a href="{{ url_for('static', filename=['Entertainment/Images/', picture ]|join('')) }}" target="_blank">
+                <span class="glyphicon glyphicon-eye-open"></span> View
+            </a> /
+            <a href="/{{picture}}/remove">
+                <span class="glyphicon glyphicon-remove"></span> Remove 
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</html>

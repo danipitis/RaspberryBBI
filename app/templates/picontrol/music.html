@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "layout.html" %}
+{% block head %}
+<!-- Bootstrap -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pitheme.css') }}" rel="stylesheet">
+<title>Music</title>
+{% endblock %}
+
+{% set active_page = "music" %}
+
+{% block content %}
+
+<h3>Music</h3>
+
+ <div class="span3">
+<div class="table-responsive">
+ <table class="table table-hover table-condensed">
+   <thead>
+     <tr>
+       <th>Song name</th>
+       <th>Duration</th>
+       <th>Play/Stop</th>
+     </tr>
+   </thead>
+   <tbody>
+    <tr>
+      {% for music in music_list: %}
+      <tr>
+       {% if music_list[music][1] == 'stop' %}
+       <td>
+        {{music}}
+      </td>
+      <td>
+        {{music_list[music][0]}}
+      </td>
+      <td>
+        <a href="/play_song/{{music}}/play"><span class="glyphicon glyphicon-play"></span>Play</a> 
+      </td>
+      {% endif %}
+      {% if music_list[music][1] == 'play' %}
+      <td> 
+        <b> {{music}} </b>
+      </td>
+      <td>
+        <b>{{music_list[music][0]}} </b>
+      </td>
+      <td>
+        <a href="/play_song/{{music}}/stop"><span class="glyphicon glyphicon-stop"></span><b>Stop</b></a>
+      </td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</html>

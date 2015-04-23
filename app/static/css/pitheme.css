@@ -1,0 +1,30 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.bigText {
+    height:35px;
+}
+
+.glyphicon{
+    font-size: 12px; 
+}
+
+.glyphicon-globe{
+    font-size: 16px; 
+}	
+
+.thumbnail img {
+    min-height:50px; 
+    height:175px; 
+}
+
+.span3 {  
+    height: 700px !important;
+    overflow: scroll;
+}

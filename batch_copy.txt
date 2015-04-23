@@ -1,0 +1,7 @@
+cd Desktop
+cd RaspberryBBI
+put *.py
+put app/mod_monitor/*.py app/mod_monitor
+put app/mod_picontrol/*.py app/mod_picontrol
+put app/templates/*.html app/templates
+put app/templates/picontrol/*.html app/templates/picontrol

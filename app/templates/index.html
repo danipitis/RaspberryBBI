@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "layout.html" %}
+{% block head %}
+<!-- Bootstrap -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pitheme.css') }}" rel="stylesheet">
+<title>Raspberry BBI</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-4">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Temperature and uptime</h3>
+      </div>
+      <div class="panel-body">
+        <div class="alert alert-info" role="alert">
+          <strong><span class="glyphicon glyphicon-time"></span> Date and time</strong> {{ time }}
+        </div>
+        <div class="alert alert-info" role="alert">
+          <strong><span class="glyphicon glyphicon-fire"></span> CPU temperature</strong> {{ cpu_temperature }}&deg; Celsius
+        </div>
+        <div class="alert alert-info" role="alert">
+          <strong><span class="glyphicon glyphicon-fire"></span> GPU temperature</strong> {{ gpu_temperature }}&deg; Celsius
+        </div>
+        <div class="alert alert-info" role="alert">
+          <strong><span class="glyphicon glyphicon-stats"></span> Uptime</strong> {{ system_uptime }}
+        </div>
+        <div class="alert alert-info" role="alert">
+          <strong><span class="glyphicon glyphicon-cloud"></span> Temperature</strong> {{ weather_temperature }} degrees and {{ weather_description}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Stats and LCD control</h3>
+      </div>
+      <div class="panel-body">
+        <h4>
+          <span class="label label-default"><span class="glyphicon glyphicon-cog"></span> Used RAM memory {{ ram_percent }}% </span>
+        </h4>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ ram_percent }}%;"><span class="sr-only"> {{ ram_percent }}% Used</span></div>
+        </div>
+
+        <h4>
+          <span class="label label-default"><span class="glyphicon glyphicon-hdd"></span> Used disk space {{ disk_percent }}% </span>
+        </h4>
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ disk_percent }}%;"><span class="sr-only"> {{ disk_percent }}% Avaible</span></div>
+        </div>
+
+        <h4>
+          <span class="label label-default"><span class="glyphicon glyphicon-wrench"></span> Used CPU memory {{ total_used_cpu }} %</span>
+        </h4>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ total_used_cpu }}%;"><span class="sr-only"> {{ total_used_cpu }}% Used</span></div>
+        </div>
+
+        <form method="post" action="change_first_line">  
+          <label>1st LCD line: </label>  
+          <input class = "bigText" type="text" name="lcd" id="lcd" placeholder="Enter your text here..." size="25"/> 
+          </br> </br>
+          <center>
+          <button class="btn btn-primary" type="submit" name="btnPrintFirstLine"value="printCenter"><span class="glyphicon glyphicon-align-center"></span> Center</button>
+          <button class="btn btn-primary" type="submit" name="btnPrintFirstLine"value="printLeft"><span class="glyphicon glyphicon-align-left"></span> Left</button> 
+          <button class="btn btn-primary" type="submit" name="btnPrintFirstLine"value="printRight"><span class="glyphicon glyphicon-align-right"></span> Right</button> 
+          <button class="btn btn-primary" type="submit" name="btnPrintFirstLine"value="printScroll"><span class="glyphicon glyphicon-repeat"></span> Scroll</button>  
+          </center>
+        <hr>
+      </form>  
+
+      <form method="post" action="change_second_line">  
+
+        <label>2nd LCD line:</label>  
+        <input class = "bigText" type="text" name="second_lcd" id="second_lcd" placeholder="Enter your text here" size="25"/> 
+          </br> </br>
+          <center>
+          <button class="btn btn-primary" type="submit" name="btnPrintSecondLine"value="printCenter"><span class="glyphicon glyphicon-align-center"></span> Center</button>
+          <button class="btn btn-primary" type="submit" name="btnPrintSecondLine"value="printLeft"><span class="glyphicon glyphicon-align-left"></span> Left</button> 
+          <button class="btn btn-primary" type="submit" name="btnPrintSecondLine"value="printRight"><span class="glyphicon glyphicon-align-right"></span> Right</button> 
+          <button class="btn btn-primary" type="submit" name="btnPrintSecondLine"value="printScroll"><span class="glyphicon glyphicon-repeat"></span> Scroll</button>  
+          </center> 
+
+      </form> 
+
+    </div>
+  </div>
+
+
+</div>
+<div class="col-md-4">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Monitoring</h3>
+    </div>
+    <div class="panel-body">
+
+      <h4>
+        <span class="label label-default"><span class="glyphicon glyphicon-chevron-up"></span> Start LCD time and date</span>
+      </h4>
+      <form method="post" action="start_lcd_monitoring">   
+        <button class="btn btn-primary" type="submit" value="StartMonitoring">Start monitoring</button> 
+      </form>
+
+      <h4>
+        <span class="label label-default"><span class="glyphicon glyphicon-chevron-down"></span> Stop LCD time and date</span>
+      </h4>
+      <form method="post" action="stop_lcd_monitoring">  
+        <button class="btn btn-primary" type="submit" value="StopMonitoring">Stop monitoring</button> 
+      </form>  
+
+      <hr>
+      <form action="upload" method=post enctype=multipart/form-data>
+        <input  type=file name=file title="Search for a file to add" >
+      </br>
+        <input  type=submit value=Upload>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>
